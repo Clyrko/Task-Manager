@@ -1,40 +1,40 @@
+
 // Define UI Variables
 
 const form = document.querySelector('#task-form');
-const tasklist = document.querySelector('.collection'); // The ul
-const clearBtn = document.querySelector('clear.tasks');
+const taskList = document.querySelector('.collection'); // The Ul
+const clearBtn = document.querySelector('.clear-tasks');
 const filter = document.querySelector('#filter');
 const taskInput = document.querySelector('#task');
 
-// Load All event listeners
+// Load all event listeners
 
 loadEventListeners();
 
-// Load all event loadEventListeners
+// Load all event listeners
 
 function loadEventListeners() {
   // DOM Load event
   document.addEventListener('DOMContentLoaded', getTasks);
 
-  // add task event
+  // Add task event
   form.addEventListener('submit', addTask);
 
-  // remove task event
+  // Remove task event
   taskList.addEventListener('click', removeTask);
 
-  // clear task event
+  // Clear task event
   clearBtn.addEventListener('click', clearTasks);
 
-  // filter tasks events
+  // Filter tasks event
   filter.addEventListener('keyup', filterTasks);
-
 }
 
-// Get tasks from LS
+// Get Tasks from LS
 
 function getTasks() {
   let tasks;
-  if (localStorage.getItem('tasks') === nell) {
+  if (localStorage.getItem('tasks') === null) {
     tasks = [];
   } else {
     tasks = JSON.parse(localStorage.getItem('tasks'));
@@ -54,7 +54,6 @@ function getTasks() {
     li.appendChild(document.createTextNode(task));
 
     // Create a new link element
-
     const link = document.createElement('a');
 
     // Add class
@@ -65,7 +64,7 @@ function getTasks() {
 
     link.innerHTML = '<i class="fa fa-remove"></i>';
 
-    // Append link to li
+    // Append the link to li
 
     li.appendChild(link);
 
@@ -107,7 +106,7 @@ function addTask(e) {
 
   link.innerHTML = '<i class="fa fa-remove"></i>';
 
-  // Append link to li
+  // Append the link to li
 
   li.appendChild(link);
 
@@ -130,7 +129,7 @@ function addTask(e) {
 
 function storeTaskInLocalStorage(task) {
   let tasks;
-  if (localStorage.getItem('tasks') === nell) {
+  if (localStorage.getItem('tasks') === null) {
     tasks = [];
   } else {
     tasks = JSON.parse(localStorage.getItem('tasks'));
@@ -142,7 +141,6 @@ function storeTaskInLocalStorage(task) {
 }
 
 // Remove Task
-
 function removeTask(e) {
   if (e.target.parentElement.classList.contains('delete-item')) {
     if (confirm('Are You Sure?')) {
@@ -154,9 +152,11 @@ function removeTask(e) {
   }
 }
 
+// Remove from LS
+
 function removeTaskFromLocalStorage(taskItem) {
   let tasks;
-  if (localStorage.getItem('tasks') === nell) {
+  if (localStorage.getItem('tasks') === null) {
     tasks = [];
   } else {
     tasks = JSON.parse(localStorage.getItem('tasks'));
@@ -171,7 +171,7 @@ function removeTaskFromLocalStorage(taskItem) {
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-// CLear Task
+// Clear Tasks
 
 function clearTasks() {
   while (taskList.firstChild) {
@@ -183,17 +183,18 @@ function clearTasks() {
   clearTasksFromLocalStorage();
 }
 
-// Clear tasks from LS
+// Clear Tasks from LS
 
 function clearTasksFromLocalStorage() {
   localStorage.clear();
 }
 
-// Filter Task
+// Filter Tasks
 
 function filterTasks(e) {
-  const text = e.target.value.toLowerCase; // gives us whats being typed in
-  document.querySelectorAll('collection-item').forEach(function (task) {
+  const text = e.target.value.toLowerCase(); // Gives us what is typed in
+
+  document.querySelectorAll('.collection-item').forEach(function (task) {
     const item = task.firstChild.textContent;
     if (item.toLowerCase().indexOf(text) != -1) {
       task.style.display = 'block';
